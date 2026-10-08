@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTech Survey Portal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-deep: #07090f;
+            --card-bg: rgba(13, 16, 28, 0.85);
+            --primary-glow: #6366f1;
+            --accent-glow: #00f2fe;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(0, 242, 254, 0.1) 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 35px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(99, 102, 241, 0.1);
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            box-sizing: border-box;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RTech Branding Header */
+        .brand-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 15px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #818cf8, var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            background: var(--primary-glow);
+            color: white;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            -webkit-text-fill-color: white;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            font-size: 12px;
+            color: #34d399;
+            background: rgba(52, 211, 153, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: #34d399;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #34d399;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header-title h2 {
+            margin: 0 0 6px 0;
+            color: var(--text-main);
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin: 0;
+        }
+
+        /* Cinematic Progress Bar */
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            height: 6px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-bar {
+            width: 5%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-glow), var(--accent-glow));
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 10px;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .question-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .question-box:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        label.q-title {
+            display: block;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            font-size: 14px;
+            letter-spacing: 0.2px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 13px 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        select option {
+            background: #0d101c;
+            color: white;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            padding: 11px 15px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .radio-label:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .radio-label input {
+            margin-right: 12px;
+            accent-color: var(--primary-glow);
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        button.submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow));
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        button.submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.6);
+        }
+
+        button.submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        #result-box {
+            display: none;
+            background: rgba(13, 16, 28, 0.95);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        #result-box h3 {
+            color: var(--accent-glow);
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        .output-list {
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: 20px;
+        }
+
+        .output-list li {
+            margin-bottom: 12px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 10px;
+            color: var(--text-muted);
+        }
+
+        .output-list li strong {
+            color: var(--text-main);
+        }
+
+        /* Footer Branding */
+        .footer-brand {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- RTech Brand Header -->
+    <div class="brand-header">
+        <div class="logo">RTech <span>SECURE</span></div>
+        <div class="status-badge">
+            <div class="status-dot"></div> Live Portal
+        </div>
+    </div>
+
+    <div class="header-title">
+        <h2>Cinematic Survey System</h2>
+        <p>Kripya diye gaye sabhi 20 sawalon ke sahi jawab dein.</p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <form id="surveyForm">
+        <!-- Questions 1 to 20 -->
+        <div class="question-box">
+            <label class="q-title">1. Aapka naam kya hai?</label>
+            <input type="text" name="q1" required placeholder="Apna pura naam likhein...">
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">2. Aapki age kitni hai?</label>
+            <input type="text" name="q2" required placeholder="Jaise: 20">
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">3. Aapka current education course kaun sa hai?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q3" value="BCA" required> BCA</label>
+                <label class="radio-label"><input type="radio" name="q3" value="B.Tech"> B.Tech</label>
+                <label class="radio-label"><input type="radio" name="q3" value="BSc"> BSc</label>
+                <label class="radio-label"><input type="radio" name="q3" value="Other"> Other</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">4. Aapko kaun sa Operating System sabse zyada pasand hai?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q4" value="Linux" required> Linux (Pop!_OS / Mint / etc.)</label>
+                <label class="radio-label"><input type="radio" name="q4" value="Windows"> Windows</label>
+                <label class="radio-label"><input type="radio" name="q4" value="MacOS"> MacOS</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">5. Aapki favourite programming language kaun si hai?</label>
+            <input type="text" name="q5" required placeholder="Jaise: Python, C++, Java...">
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">6. Aapko coding me sabse zyada kya pasand hai?</label>
+            <select name="q6" required>
+                <option value="">-- Select Karein --</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Cybersecurity">Cybersecurity & Ethical Hacking</option>
+                <option value="App Development">App Development</option>
+                <option value="AI & Machine Learning">AI & Machine Learning</option>
+            </select>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">7. Aap din me kitne ghante coding ya study karte hain?</label>
+            <input type="text" name="q7" required placeholder="Jaise: 3-4 hours">
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">8. Kya aapne kabhi Linux distros change (distro-hop) kiye hain?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q8" value="Haan, bahut saare" required> Haan</label>
+                <label class="radio-label"><input type="radio" name="q8" value="Nahi"> Nahi</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">9. Kya aapko Git aur GitHub use karna aata hai?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q9" value="Haan" required> Haan</label>
+                <label class="radio-label"><input type="radio" name="q9" value="Nahi"> Nahi</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">10. Aapka primary device kya hai?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q10" value="Laptop" required> Laptop</label>
+                <label class="radio-label"><input type="radio" name="q10" value="PC"> Desktop PC</label>
+                <label class="radio-label"><input type="radio" name="q10" value="Mobile Only"> Mobile Only</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">11. Kya aapko database management (SQL) ki samajh hai?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q11" value="Haan" required> Haan</label>
+                <label class="radio-label"><input type="radio" name="q11" value="Thodi bahut"> Thodi bahut</label>
+                <label class="radio-label"><input type="radio" name="q11" value="Nahi"> Nahi</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">12. Future me aapka career goal kya hai?</label>
+            <input type="text" name="q12" required placeholder="Jaise: Penetration Tester, Developer...">
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">13. Kya aapko online courses ya self-study pasand hai?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q13" value="Self-study" required> Self-study</label>
+                <label class="radio-label"><input type="radio" name="q13" value="Online Courses"> Online Courses</label>
+                <label class="radio-label"><input type="radio" name="q13" value="Dono"> Dono</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">14. Aapko relaxation ke liye kya karna pasand hai?</label>
+            <input type="text" name="q14" required placeholder="Jaise: Anime dekhna, Gardening, Music...">
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">15. Kya aap coffee peete hain ya chai?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q15" value="Chai" required> Chai ☕</label>
+                <label class="radio-label"><input type="radio" name="q15" value="Coffee"> Coffee ☕</label>
+                <label class="radio-label"><input type="radio" name="q15" value="Dono nahi"> Dono nahi</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">16. Aap project banane ke liye kis tool ka use karte hain?</label>
+            <input type="text" name="q16" required placeholder="Jaise: VS Code, Terminal...">
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">17. Kya aapko networking aur security tools ki jankari hai?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q17" value="Haan" required> Haan</label>
+                <label class="radio-label"><input type="radio" name="q17" value="Seekh raha hoon"> Seekh raha hoon</label>
+                <label class="radio-label"><input type="radio" name="q17" value="Nahi"> Nahi</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">18. Kya aapko reading ka shauk hai?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="q18" value="Haan" required> Haan</label>
+                <label class="radio-label"><input type="radio" name="q18" value="Kabhi-kabhi"> Kabhi-kabhi</label>
+                <label class="radio-label"><input type="radio" name="q18" value="Nahi"> Nahi</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">19. Is survey form ka design aapko kaisa laga?</label>
+            <input type="text" name="q19" required placeholder="Apna feedback dein...">
+        </div>
+
+        <div class="question-box">
+            <label class="q-title">20. Koi aur sujhaav ya message jo aap dena chahein?</label>
+            <input type="text" name="q20" required placeholder="Kuch bhi likhein...">
+        </div>
+
+        <button type="submit" class="submit-btn">Initialize Submission 🚀</button>
+    </form>
+
+    <div id="result-box">
+        <h3>✨ Transmission Complete!</h3>
+        <p style="font-size: 14px; color: var(--text-muted);">Aapke responses successfully record ho chuke hain:</p>
+        <div class="output-list" id="output"></div>
+    </div>
+
+    <div class="footer-brand">Powered by RTech Ecosystem</div>
+</div>
+
+<script>
+    const form = document.getElementById('surveyForm');
+    const progressBar = document.getElementById('progressBar');
+    const inputs = form.querySelectorAll('input, select');
+
+    function updateProgress() {
+        let totalFields = 20;
+        let answeredQuestions = new Set();
+        
+        inputs.forEach(input => {
+            if (input.type === 'radio') {
+                if (input.checked) answeredQuestions.add(input.name);
+            } else if (input.value.trim() !== '') {
+                answeredQuestions.add(input.name);
+            }
+        });
+
+        let percentage = (answeredQuestions.size / totalFields) * 100;
+        progressBar.style.width = percentage + '%';
+    }
+
+    form.addEventListener('input', updateProgress);
+    form.addEventListener('change', updateProgress);
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let formData = new FormData(this);
+        let outputHTML = "<ul style='list-style-type: none; padding: 0;'>";
+        
+        let i = 1;
+        for (let [key, value] of formData.entries()) {
+            outputHTML += `<li><strong>Q${i}:</strong> ${value}</li>`;
+            i++;
+        }
+        outputHTML += "</ul>";
+        
+        document.getElementById('output').innerHTML = outputHTML;
+        form.style.display = 'none';
+        document.getElementById('result-box').style.display = 'block';
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+</script>
+
+</body>
+</html>
